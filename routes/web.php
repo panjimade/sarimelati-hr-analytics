@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\PerformanceController;
+use App\Http\Controllers\TurnoverPredictionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,6 +20,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('attendances', AttendanceController::class)->except(['show']);
     Route::resource('performances', PerformanceController::class)->except(['show']);
+
+    Route::get('/predictions', [TurnoverPredictionController::class, 'index'])->name('predictions.index');
+    Route::post('/predictions/run', [TurnoverPredictionController::class, 'runPrediction'])->name('predictions.run');
 
     Route::get('/import-excel', [ImportExcelController::class, 'index'])->name('import.index');
     Route::post('/import-excel', [ImportExcelController::class, 'store'])->name('import.store');
