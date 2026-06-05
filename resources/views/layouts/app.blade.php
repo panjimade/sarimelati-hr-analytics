@@ -253,7 +253,7 @@
                 Data KPI
             </a>
 
-            <a href="#" onclick="alert('Menu Prediksi Turnover akan dibuat pada tahap Random Forest')">
+            <a href="{{ route('predictions.index') }}" class="{{ request()->routeIs('predictions.*') ? 'active' : '' }}">
                 Prediksi Turnover
             </a>
 
