@@ -245,25 +245,35 @@
                 Data Karyawan
             </a>
 
-            <a href="{{ route('attendances.index') }}" class="{{ request()->routeIs('attendances.*') ? 'active' : '' }}">
-                Data Absensi
-            </a>
+            @if(in_array(Auth::user()->role, ['admin', 'supervisor']))
+                <a href="{{ route('attendances.index') }}" class="{{ request()->routeIs('attendances.*') ? 'active' : '' }}">
+                    Data Absensi
+                </a>
 
-            <a href="{{ route('performances.index') }}" class="{{ request()->routeIs('performances.*') ? 'active' : '' }}">
-                Data KPI
-            </a>
+                <a href="{{ route('performances.index') }}" class="{{ request()->routeIs('performances.*') ? 'active' : '' }}">
+                    Data KPI
+                </a>
+            @endif
 
-            <a href="{{ route('predictions.index') }}" class="{{ request()->routeIs('predictions.*') ? 'active' : '' }}">
-                Prediksi Turnover
-            </a>
+            @if(in_array(Auth::user()->role, ['admin', 'hrd_manager']))
+                <a href="{{ route('predictions.index') }}" class="{{ request()->routeIs('predictions.*') ? 'active' : '' }}">
+                    Prediksi Turnover
+                </a>
 
-            <a href="{{ route('reports.index') }}" class="{{ request()->routeIs('reports.*') ? 'active' : '' }}">
-                Laporan
-            </a>
+                <a href="{{ route('reports.index') }}" class="{{ request()->routeIs('reports.*') ? 'active' : '' }}">
+                    Laporan
+                </a>
+            @endif
 
-            <a href="{{ route('import.index') }}" class="{{ request()->routeIs('import.*') ? 'active' : '' }}">
-                Import Excel
-            </a>
+            @if(Auth::user()->role == 'admin')
+                <a href="{{ route('users.index') }}" class="{{ request()->routeIs('users.*') ? 'active' : '' }}">
+                    Manajemen User
+                </a>
+
+                <a href="{{ route('import.index') }}" class="{{ request()->routeIs('import.*') ? 'active' : '' }}">
+                    Import Excel
+                </a>
+            @endif
 
             <div class="menu-label">Akun</div>
 
