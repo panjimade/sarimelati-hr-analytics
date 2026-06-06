@@ -257,7 +257,7 @@
                 Prediksi Turnover
             </a>
 
-            <a href="#" onclick="alert('Menu Laporan akan dibuat setelah dashboard dan data selesai')">
+            <a href="{{ route('reports.index') }}" class="{{ request()->routeIs('reports.*') ? 'active' : '' }}">
                 Laporan
             </a>
 
