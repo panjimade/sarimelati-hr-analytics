@@ -225,6 +225,24 @@
         .pagination-wrapper {
             margin-top: 18px;
         }
+
+        .chart-box {
+            position: relative;
+            width: 100%;
+        }
+
+        .chart-small {
+            height: 450px;
+        }
+
+        .chart-medium {
+            height: 350px;
+        }
+
+        .chart-box canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
     </style>
 </head>
 <body>

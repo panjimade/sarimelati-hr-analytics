@@ -30,6 +30,29 @@
         </div>
     </div>
 
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px;">
+        <div class="card">
+            <div class="section-title">Grafik Absensi</div>
+            <div class="chart-box chart-small">
+                <canvas id="attendanceChart"></canvas>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="section-title">Grafik Risiko Turnover</div>
+            <div class="chart-box chart-small">
+                <canvas id="riskChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" style="margin-bottom: 24px;">
+        <div class="section-title">Grafik Ranking Performa Karyawan</div>
+        <div class="chart-box chart-medium">
+            <canvas id="performanceChart"></canvas>
+        </div>
+    </div>
+
     <div class="table-card">
         <div class="section-title">Ranking Performa Karyawan</div>
 
@@ -62,10 +85,95 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="5">Data performa belum tersedia. Silakan import Excel terlebih dahulu.</td>
+                        <td colspan="5">
+                            Data performa belum tersedia. Silakan import Excel terlebih dahulu.
+                        </td>
                     </tr>
                 @endforelse
             </tbody>
         </table>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const attendanceLabels = @json($attendanceChartLabels);
+        const attendanceData = @json($attendanceChartData);
+
+        const performanceLabels = @json($performanceChartLabels);
+        const performanceData = @json($performanceChartData);
+
+        const riskLabels = @json($riskChartLabels);
+        const riskData = @json($riskChartData);
+
+        new Chart(document.getElementById('attendanceChart'), {
+            type: 'doughnut',
+            data: {
+                labels: attendanceLabels,
+                datasets: [{
+                    data: attendanceData,
+                    backgroundColor: ['#16A34A', '#DC2626'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+        new Chart(document.getElementById('riskChart'), {
+            type: 'doughnut',
+            data: {
+                labels: riskLabels,
+                datasets: [{
+                    data: riskData,
+                    backgroundColor: ['#16A34A', '#F59E0B', '#DC2626'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+        new Chart(document.getElementById('performanceChart'), {
+            type: 'bar',
+            data: {
+                labels: performanceLabels,
+                datasets: [{
+                    label: 'Rata-rata KPI',
+                    data: performanceData,
+                    backgroundColor: '#C8102E',
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    </script>
 </x-app-layout>
