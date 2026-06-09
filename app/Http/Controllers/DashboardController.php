@@ -42,12 +42,37 @@ class DashboardController extends Controller
             ->limit(5)
             ->get();
 
+        // Data grafik absensi
+        $attendanceChartLabels = ['Hadir', 'Tidak Hadir'];
+        $attendanceChartData = [$totalHadir, $totalTidakHadir];
+
+        // Data grafik ranking performa
+        $performanceChartLabels = $rankingPerformance->pluck('nama')->toArray();
+        $performanceChartData = $rankingPerformance
+            ->pluck('rata_rata_kpi')
+            ->map(fn ($value) => round((float) $value, 2))
+            ->toArray();
+
+        // Data grafik risiko turnover
+        $riskChartLabels = ['Rendah', 'Sedang', 'Tinggi'];
+        $riskChartData = [
+            TurnoverPrediction::where('kategori_risiko', 'Rendah')->count(),
+            TurnoverPrediction::where('kategori_risiko', 'Sedang')->count(),
+            TurnoverPrediction::where('kategori_risiko', 'Tinggi')->count(),
+        ];
+
         return view('dashboard', compact(
             'totalEmployees',
             'totalHadir',
             'totalTidakHadir',
             'highRiskEmployees',
-            'rankingPerformance'
+            'rankingPerformance',
+            'attendanceChartLabels',
+            'attendanceChartData',
+            'performanceChartLabels',
+            'performanceChartData',
+            'riskChartLabels',
+            'riskChartData'
         ));
     }
 }

@@ -8,6 +8,7 @@ use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\PerformanceController;
 use App\Http\Controllers\TurnoverPredictionController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -18,19 +19,47 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/employees', [EmployeeController::class, 'index'])->name('employees.index');
+    Route::get('/employees/{employee}', [EmployeeController::class, 'show'])->name('employees.show');
 
-    Route::resource('attendances', AttendanceController::class)->except(['show']);
-    Route::resource('performances', PerformanceController::class)->except(['show']);
+    Route::resource('attendances', AttendanceController::class)
+        ->except(['show'])
+        ->middleware('role:admin,supervisor');
 
-    Route::get('/predictions', [TurnoverPredictionController::class, 'index'])->name('predictions.index');
-    Route::post('/predictions/run', [TurnoverPredictionController::class, 'runPrediction'])->name('predictions.run');
+    Route::resource('performances', PerformanceController::class)
+        ->except(['show'])
+        ->middleware('role:admin,supervisor');
 
-    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
-    Route::get('/reports/export/pdf', [ReportController::class, 'exportPdf'])->name('reports.export.pdf');
-    Route::get('/reports/export/excel', [ReportController::class, 'exportExcel'])->name('reports.export.excel');
+    Route::get('/predictions', [TurnoverPredictionController::class, 'index'])
+        ->name('predictions.index')
+        ->middleware('role:admin,hrd_manager');
 
-    Route::get('/import-excel', [ImportExcelController::class, 'index'])->name('import.index');
-    Route::post('/import-excel', [ImportExcelController::class, 'store'])->name('import.store');
+    Route::post('/predictions/run', [TurnoverPredictionController::class, 'runPrediction'])
+        ->name('predictions.run')
+        ->middleware('role:admin,hrd_manager');
+
+    Route::get('/reports', [ReportController::class, 'index'])
+        ->name('reports.index')
+        ->middleware('role:admin,hrd_manager');
+
+    Route::get('/reports/export/pdf', [ReportController::class, 'exportPdf'])
+        ->name('reports.export.pdf')
+        ->middleware('role:admin,hrd_manager');
+
+    Route::get('/reports/export/excel', [ReportController::class, 'exportExcel'])
+        ->name('reports.export.excel')
+        ->middleware('role:admin,hrd_manager');
+
+    Route::resource('users', UserController::class)
+        ->except(['show'])
+        ->middleware('role:admin');
+
+    Route::get('/import-excel', [ImportExcelController::class, 'index'])
+        ->name('import.index')
+        ->middleware('role:admin');
+
+    Route::post('/import-excel', [ImportExcelController::class, 'store'])
+        ->name('import.store')
+        ->middleware('role:admin');
 });
 
 Route::middleware('auth')->group(function () {

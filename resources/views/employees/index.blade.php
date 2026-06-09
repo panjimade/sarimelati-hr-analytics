@@ -23,6 +23,7 @@
                     <th>Shift</th>
                     <th>Tanggal Masuk</th>
                     <th>Status</th>
+                    <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -41,10 +42,15 @@
                                 <span class="badge badge-danger">Tidak Aktif</span>
                             @endif
                         </td>
+                        <td>
+                            <a href="{{ route('employees.show', $employee->id) }}" class="btn-red" style="padding: 7px 10px;">
+                                Detail
+                            </a>
+                        </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="7">
+                        <td colspan="8">
                             Data karyawan belum tersedia. Silakan import file Excel terlebih dahulu.
                         </td>
                     </tr>
