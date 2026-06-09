@@ -243,6 +243,251 @@
             width: 100% !important;
             height: 100% !important;
         }
+
+        /* ===== Final UI Polishing ===== */
+
+        body {
+            overflow-x: hidden;
+        }
+
+        .sidebar {
+            box-shadow: 4px 0 18px rgba(0,0,0,0.10);
+        }
+
+        .brand-title {
+            letter-spacing: 0.2px;
+        }
+
+        .sidebar a,
+        .logout-button {
+            transition: 0.2s ease;
+        }
+
+        .sidebar a:hover,
+        .logout-button:hover {
+            transform: translateX(3px);
+        }
+
+        .sidebar a.active {
+            box-shadow: 0 8px 18px rgba(200,16,46,0.35);
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .topbar-title {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .topbar-title small {
+            font-size: 12px;
+            font-weight: normal;
+            color: #6B7280;
+        }
+
+        .topbar-user {
+            background: #F9FAFB;
+            border: 1px solid #E5E7EB;
+            padding: 9px 14px;
+            border-radius: 999px;
+            color: #374151;
+            font-weight: 600;
+        }
+
+        .content {
+            max-width: 1440px;
+        }
+
+        .card,
+        .table-card {
+            border: 1px solid #EEF0F3;
+        }
+
+        .card:hover,
+        .table-card:hover {
+            box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+        }
+
+        .stat-title {
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+        }
+
+        .stat-value {
+            line-height: 1;
+        }
+
+        .page-header {
+            background: white;
+            padding: 22px;
+            border-radius: 16px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+            border: 1px solid #EEF0F3;
+        }
+
+        .page-title {
+            color: #111827;
+        }
+
+        .table-card {
+            overflow-x: auto;
+        }
+
+        table {
+            min-width: 900px;
+        }
+
+        thead th {
+            white-space: nowrap;
+        }
+
+        tbody tr:hover {
+            background: #FFF7F7;
+        }
+
+        td {
+            vertical-align: middle;
+        }
+
+        .badge {
+            white-space: nowrap;
+        }
+
+        .btn-red {
+            font-weight: 700;
+            transition: 0.2s ease;
+            box-shadow: 0 6px 14px rgba(200,16,46,0.20);
+        }
+
+        .btn-red:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: #6B7280;
+            color: white;
+            padding: 10px 14px;
+            border-radius: 10px;
+            text-decoration: none;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .btn-secondary:hover {
+            background: #4B5563;
+        }
+
+        .btn-success {
+            background: #166534;
+            color: white;
+            padding: 10px 14px;
+            border-radius: 10px;
+            text-decoration: none;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .btn-success:hover {
+            background: #14532D;
+        }
+
+        .btn-danger {
+            background: #991B1B;
+            color: white;
+            padding: 10px 14px;
+            border-radius: 10px;
+            text-decoration: none;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .btn-danger:hover {
+            background: #7F1D1D;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #D1D5DB;
+            border-radius: 10px;
+            margin-top: 8px;
+            outline: none;
+        }
+
+        .form-control:focus {
+            border-color: #C8102E;
+            box-shadow: 0 0 0 3px rgba(200,16,46,0.12);
+        }
+
+        .form-label {
+            font-weight: bold;
+            display: block;
+        }
+
+        .alert-success {
+            background: #DCFCE7;
+            color: #166534;
+            padding: 14px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #BBF7D0;
+        }
+
+        .alert-error {
+            background: #FEE2E2;
+            color: #991B1B;
+            padding: 14px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #FECACA;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 34px;
+            color: #6B7280;
+        }
+
+        .empty-state-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .pagination-wrapper nav {
+            margin-top: 18px;
+        }
+
+        .chart-box {
+            position: relative;
+            width: 100%;
+        }
+
+        .chart-small {
+            height: 180px;
+        }
+
+        .chart-medium {
+            height: 220px;
+        }
+
+        .chart-box canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
     </style>
 </head>
 <body>
@@ -284,6 +529,8 @@
             @endif
 
             @if(Auth::user()->role == 'admin')
+                <div class="menu-label">Admin Tools</div>
+
                 <a href="{{ route('users.index') }}" class="{{ request()->routeIs('users.*') ? 'active' : '' }}">
                     Manajemen User
                 </a>
@@ -310,11 +557,19 @@
         <main class="main-content">
             <div class="topbar">
                 <div class="topbar-title">
-                    Dashboard Internal
+                    Sarimelati HR Analytics
+                    <small>Human Resource Information System & Predictive Analytics</small>
                 </div>
 
                 <div class="topbar-user">
-                    {{ Auth::user()->name }} | {{ Auth::user()->role }}
+                    {{ Auth::user()->name }} |
+                    @if(Auth::user()->role == 'admin')
+                        Admin
+                    @elseif(Auth::user()->role == 'supervisor')
+                        Supervisor
+                    @else
+                        HRD/Manager
+                    @endif
                 </div>
             </div>
 
