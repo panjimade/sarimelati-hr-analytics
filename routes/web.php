@@ -9,6 +9,7 @@ use App\Http\Controllers\PerformanceController;
 use App\Http\Controllers\TurnoverPredictionController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminResetDataController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -64,6 +65,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/export-import-format', [ImportExcelController::class, 'exportImportFormat'])
         ->middleware('role:admin')
         ->name('import.export-format');
+
+    Route::middleware('role:admin')->group(function () {
+        Route::get('/admin/reset-data-hris', [AdminResetDataController::class, 'index'])
+            ->name('admin.reset-data.index');
+
+        Route::post('/admin/reset-data-hris', [AdminResetDataController::class, 'reset'])
+            ->name('admin.reset-data.reset');
+    });
 });
 
 Route::middleware('auth')->group(function () {

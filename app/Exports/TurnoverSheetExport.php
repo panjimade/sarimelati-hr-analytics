@@ -2,24 +2,25 @@
 
 namespace App\Exports;
 
-use App\Models\Turnover;
+use App\Models\Employee;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithTitle;
+use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
-class TurnoverSheetExport implements FromCollection, WithHeadings, WithTitle
+class TurnoverSheetExport implements FromCollection, WithHeadings, WithTitle, WithStrictNullComparison, WithColumnFormatting
 {
     public function collection()
     {
-        return Turnover::with('employee')
-            ->join('employees', 'turnovers.employee_id', '=', 'employees.id')
-            ->select('turnovers.*')
-            ->orderBy('employees.employee_code', 'asc')
+        return Employee::with('turnover')
+            ->orderBy('employee_code', 'asc')
             ->get()
-            ->map(function ($turnover) {
+            ->map(function ($employee) {
                 return [
-                    'employee_id' => $turnover->employee->employee_code ?? '-',
-                    'status_keluar' => $turnover->status_keluar,
+                    'employee_id' => $employee->employee_code,
+                    'status_keluar' => $employee->turnover ? (int) $employee->turnover->status_keluar : 0,
                 ];
             });
     }
@@ -35,5 +36,12 @@ class TurnoverSheetExport implements FromCollection, WithHeadings, WithTitle
     public function title(): string
     {
         return 'Turnover';
+    }
+
+    public function columnFormats(): array
+    {
+        return [
+            'B' => NumberFormat::FORMAT_NUMBER,
+        ];
     }
 }
