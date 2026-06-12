@@ -21,7 +21,6 @@ class TurnoverPredictionController extends Controller
             'jumlah_tidak_hadir' => 'turnover_predictions.jumlah_tidak_hadir',
             'total_telat' => 'turnover_predictions.total_telat',
             'skor_prediksi' => 'turnover_predictions.skor_prediksi',
-            'kategori_risiko' => 'turnover_predictions.kategori_risiko',
         ];
 
         $sort = $request->get('sort', 'skor_prediksi');

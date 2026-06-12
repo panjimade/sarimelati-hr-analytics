@@ -114,17 +114,9 @@
                         </a>
                     </th>
 
-                    <th>
-                        <a href="{{ $sortUrl('kategori_risiko') }}" class="sort-link">
-                            Kategori <span class="sort-arrow">{{ $sortIcon('kategori_risiko') }}</span>
-                        </a>
-                    </th>
+                    <th>Kategori</th>
 
-                    <th>
-                        <a href="{{ $sortUrl('Hasil') }}" class="sort-link">
-                            Hasil <span class="sort-arrow">{{ $sortIcon('Hasil') }}</span>
-                        </a>
-                    </th>
+                    <th>Hasil</th>
                 </tr>
             </thead>
 
