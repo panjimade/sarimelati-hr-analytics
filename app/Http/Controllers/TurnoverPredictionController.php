@@ -10,12 +10,38 @@ use Illuminate\Http\Request;
 
 class TurnoverPredictionController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $allowedSorts = [
+            'tanggal' => 'turnover_predictions.tanggal_prediksi',
+            'kode' => 'employees.employee_code',
+            'nama' => 'employees.nama',
+            'jabatan' => 'positions.nama_jabatan',
+            'rata_rata_kpi' => 'turnover_predictions.rata_rata_kpi',
+            'jumlah_tidak_hadir' => 'turnover_predictions.jumlah_tidak_hadir',
+            'total_telat' => 'turnover_predictions.total_telat',
+            'skor_prediksi' => 'turnover_predictions.skor_prediksi',
+            'kategori_risiko' => 'turnover_predictions.kategori_risiko',
+        ];
+
+        $sort = $request->get('sort', 'skor_prediksi');
+        $direction = $request->get('direction', 'desc');
+
+        if (!array_key_exists($sort, $allowedSorts)) {
+            $sort = 'skor_prediksi';
+        }
+
+        if (!in_array($direction, ['asc', 'desc'])) {
+            $direction = 'desc';
+        }
+
         $predictions = TurnoverPrediction::with('employee.position')
-            ->orderByDesc('tanggal_prediksi')
-            ->orderByDesc('skor_prediksi')
-            ->paginate(10);
+            ->join('employees', 'turnover_predictions.employee_id', '=', 'employees.id')
+            ->join('positions', 'employees.position_id', '=', 'positions.id')
+            ->select('turnover_predictions.*')
+            ->orderBy($allowedSorts[$sort], $direction)
+            ->paginate(10)
+            ->withQueryString();
 
         $totalPredictions = TurnoverPrediction::count();
         $highRisk = TurnoverPrediction::where('kategori_risiko', 'Tinggi')->count();
@@ -27,7 +53,9 @@ class TurnoverPredictionController extends Controller
             'totalPredictions',
             'highRisk',
             'mediumRisk',
-            'lowRisk'
+            'lowRisk',
+            'sort',
+            'direction'
         ));
     }
 

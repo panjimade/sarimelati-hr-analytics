@@ -11,7 +11,6 @@ class PerformanceController extends Controller
     public function index(Request $request)
     {
         $allowedSorts = [
-            'bulan' => 'performances.bulan',
             'kode' => 'employees.employee_code',
             'nama' => 'employees.nama',
             'disiplin' => 'performances.disiplin',
@@ -20,21 +19,22 @@ class PerformanceController extends Controller
             'total_score' => 'performances.total_score',
         ];
 
-        $sort = $request->get('sort', 'bulan');
-        $direction = $request->get('direction', 'desc');
+        $sort = $request->get('sort', 'kode');
+        $direction = $request->get('direction', 'asc');
 
         if (!array_key_exists($sort, $allowedSorts)) {
-            $sort = 'bulan';
+            $sort = 'kode';
         }
 
         if (!in_array($direction, ['asc', 'desc'])) {
-            $direction = 'desc';
+            $direction = 'asc';
         }
 
         $performances = Performance::with('employee')
             ->join('employees', 'performances.employee_id', '=', 'employees.id')
             ->select('performances.*')
             ->orderBy($allowedSorts[$sort], $direction)
+            ->orderBy('performances.bulan', 'desc')
             ->paginate(10)
             ->withQueryString();
 

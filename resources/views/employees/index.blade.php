@@ -17,41 +17,43 @@
             $nextDirection = fn($column) => ($sort === $column && $direction === 'asc') ? 'desc' : 'asc';
             $sortUrl = fn($column) => request()->fullUrlWithQuery([
                 'sort' => $column,
-                'direction' => $nextDirection($column)
+                'direction' => $nextDirection($column),
+                'page' => 1
             ]);
             $sortIcon = fn($column) => $sort === $column ? ($direction === 'asc' ? '↑' : '↓') : '↕';
         @endphp
+        
         <table>
             <thead>
                 <tr>
                     <th>
-                        <a href="{{ $sortUrl('Kode') }}" class="sort-link">
-                            Kode <span class="sort-arrow">{{ $sortIcon('Kode') }}</span>
+                        <a href="{{ $sortUrl('kode') }}" class="sort-link">
+                            Kode <span class="sort-arrow">{{ $sortIcon('kode') }}</span>
                         </a>
                     </th>
                     <th>
-                        <a href="{{ $sortUrl('Nama Karyawan') }}" class="sort-link">
-                            Nama Karyawan <span class="sort-arrow">{{ $sortIcon('Nama Karyawan') }}</span>
+                        <a href="{{ $sortUrl('nama') }}" class="sort-link">
+                            Nama Karyawan <span class="sort-arrow">{{ $sortIcon('nama') }}</span>
                         </a>
                     </th>
                     <th>
-                        <a href="{{ $sortUrl('Divisi') }}" class="sort-link">
-                            Divisi <span class="sort-arrow">{{ $sortIcon('Divisi') }}</span>
+                        <a href="{{ $sortUrl('divisi') }}" class="sort-link">
+                            Divisi <span class="sort-arrow">{{ $sortIcon('divisi') }}</span>
                         </a>
                     </th>
                     <th>
-                        <a href="{{ $sortUrl('Jabatan') }}" class="sort-link">
-                            Jabatan <span class="sort-arrow">{{ $sortIcon('Jabatan') }}</span>
+                        <a href="{{ $sortUrl('jabatan') }}" class="sort-link">
+                            Jabatan <span class="sort-arrow">{{ $sortIcon('jabatan') }}</span>
                         </a>
                     </th>
                     <th>
-                        <a href="{{ $sortUrl('Shift') }}" class="sort-link">
-                            Shift <span class="sort-arrow">{{ $sortIcon('Shift') }}</span>
+                        <a href="{{ $sortUrl('shift') }}" class="sort-link">
+                            Shift <span class="sort-arrow">{{ $sortIcon('shift') }}</span>
                         </a>
                     </th>
                     <th>
-                        <a href="{{ $sortUrl('Tanggal Masuk') }}" class="sort-link">
-                            Tanggal Masuk <span class="sort-arrow">{{ $sortIcon('Tanggal Masuk') }}</span>
+                        <a href="{{ $sortUrl('tanggal_masuk') }}" class="sort-link">
+                            Tanggal Masuk <span class="sort-arrow">{{ $sortIcon('tanggal_masuk') }}</span>
                         </a>
                     </th>
                     <th>Status</th>

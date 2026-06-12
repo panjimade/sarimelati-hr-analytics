@@ -30,11 +30,7 @@
         <table>
         <thead>
             <tr>
-                <th>
-                    <a href="{{ $sortUrl('bulan') }}" class="sort-link">
-                        Bulan <span class="sort-arrow">{{ $sortIcon('bulan') }}</span>
-                    </a>
-                </th>
+                <th>Bulan</th>
                 <th>
                     <a href="{{ $sortUrl('kode') }}" class="sort-link">
                         Kode <span class="sort-arrow">{{ $sortIcon('kode') }}</span>
@@ -45,21 +41,9 @@
                         Nama Karyawan <span class="sort-arrow">{{ $sortIcon('nama') }}</span>
                     </a>
                 </th>
-                <th>
-                    <a href="{{ $sortUrl('disiplin') }}" class="sort-link">
-                        Disiplin <span class="sort-arrow">{{ $sortIcon('disiplin') }}</span>
-                    </a>
-                </th>
-                <th>
-                    <a href="{{ $sortUrl('teamwork') }}" class="sort-link">
-                        Teamwork <span class="sort-arrow">{{ $sortIcon('teamwork') }}</span>
-                    </a>
-                </th>
-                <th>
-                    <a href="{{ $sortUrl('kecepatan_kerja') }}" class="sort-link">
-                        Kecepatan Kerja <span class="sort-arrow">{{ $sortIcon('kecepatan_kerja') }}</span>
-                    </a>
-                </th>
+                <th>Disiplin</th>
+                <th>Teamwork</th>
+                <th>Kecepatan Kerja</th>
                 <th>
                     <a href="{{ $sortUrl('total_score') }}" class="sort-link">
                         Total Score <span class="sort-arrow">{{ $sortIcon('total_score') }}</span>
