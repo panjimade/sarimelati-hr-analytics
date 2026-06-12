@@ -54,12 +54,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->middleware('role:admin');
 
     Route::get('/import-excel', [ImportExcelController::class, 'index'])
-        ->name('import.index')
-        ->middleware('role:admin');
+        ->middleware('role:admin')
+        ->name('import.index');
 
     Route::post('/import-excel', [ImportExcelController::class, 'store'])
-        ->name('import.store')
-        ->middleware('role:admin');
+        ->middleware('role:admin')
+        ->name('import.store');
+
+    Route::get('/export-import-format', [ImportExcelController::class, 'exportImportFormat'])
+        ->middleware('role:admin')
+        ->name('import.export-format');
 });
 
 Route::middleware('auth')->group(function () {

@@ -1,15 +1,23 @@
 <x-app-layout>
-    <div class="page-header">
+    <div class="page-header page-header-with-actions">
         <div>
             <div class="page-title">Data Karyawan</div>
-            <p style="color: #6B7280; margin-top: 6px;">
+            <div class="page-subtitle">
                 Daftar karyawan berdasarkan dataset HRIS PT Sarimelati Kencana Tbk.
-            </p>
+            </div>
         </div>
 
-        <a href="{{ route('import.index') }}" class="btn-red">
-            Import Excel
-        </a>
+        @if(Auth::user()->role == 'admin')
+            <div class="header-actions">
+                <a href="{{ route('import.export-format') }}" class="btn-success">
+                    Export Format Import
+                </a>
+
+                <a href="{{ route('import.index') }}" class="btn-red">
+                    Import Excel
+                </a>
+            </div>
+        @endif
     </div>
 
     <div class="table-card">

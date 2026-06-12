@@ -27,13 +27,17 @@
 
         .sidebar {
             width: 260px;
-            background: #9B0D23;
+            background: #A70E25;
             color: white;
-            padding: 24px 18px;
+            min-height: 100vh;
+            height: 100vh;
             position: fixed;
-            top: 0;
             left: 0;
-            bottom: 0;
+            top: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 28px 22px;
+            box-shadow: 4px 0 18px rgba(0,0,0,0.10);
         }
 
         .brand {
@@ -90,6 +94,7 @@
             margin-left: 260px;
             width: calc(100% - 260px);
             min-height: 100vh;
+            background: #F5F6FA;
         }
 
         .topbar {
@@ -100,6 +105,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
 
         .topbar-title {
@@ -114,6 +122,8 @@
         }
 
         .content {
+            width: 100%;
+            max-width: none;
             padding: 28px 32px;
         }
 
@@ -250,10 +260,6 @@
             overflow-x: hidden;
         }
 
-        .sidebar {
-            box-shadow: 4px 0 18px rgba(0,0,0,0.10);
-        }
-
         .brand-title {
             letter-spacing: 0.2px;
         }
@@ -270,12 +276,6 @@
 
         .sidebar a.active {
             box-shadow: 0 8px 18px rgba(200,16,46,0.35);
-        }
-
-        .topbar {
-            position: sticky;
-            top: 0;
-            z-index: 10;
         }
 
         .topbar-title {
@@ -297,10 +297,6 @@
             border-radius: 999px;
             color: #374151;
             font-weight: 600;
-        }
-
-        .content {
-            max-width: 1440px;
         }
 
         .card,
@@ -505,6 +501,63 @@
         .sort-arrow {
             font-size: 12px;
             color: #C8102E;
+        }
+
+        .page-header-with-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .header-actions .btn-red,
+        .header-actions .btn-success {
+            white-space: nowrap;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.08);
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.35);
+            border-radius: 999px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb:hover {
+            background: rgba(255,255,255,0.55);
+        }
+
+        .sidebar form {
+            margin-bottom: 24px;
+        }
+
+        .topbar {
+            width: 100%;
+        }
+
+        .stats-grid,
+        .chart-grid,
+        .table-card,
+        .page-header {
+            width: 100%;
+        }
+
+        .chart-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
         }
     </style>
 </head>
