@@ -13,7 +13,7 @@
     </div>
 
     @if(session('success'))
-        <div style="background: #DCFCE7; color: #166534; padding: 14px; border-radius: 12px; margin-bottom: 20px;">
+        <div class="alert-success">
             {{ session('success') }}
         </div>
     @endif
@@ -47,14 +47,14 @@
                         <td>{{ $attendance->jam_masuk ?? '-' }}</td>
                         <td>{{ $attendance->telat_menit }} menit</td>
                         <td>
-                            <a href="{{ route('attendances.edit', $attendance->id) }}" class="btn-red" style="padding: 7px 10px;">
+                            <a href="{{ route('attendances.edit', $attendance->id) }}" class="btn-secondary" style="padding: 7px 10px;">
                                 Edit
                             </a>
 
                             <form action="{{ route('attendances.destroy', $attendance->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Yakin ingin menghapus data absensi ini?')">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn-red" style="padding: 7px 10px; background:#991B1B;">
+                                <button type="submit" class="btn-danger" style="padding: 7px 10px;">
                                     Hapus
                                 </button>
                             </form>

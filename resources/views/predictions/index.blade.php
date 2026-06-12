@@ -15,17 +15,17 @@
         </form>
     </div>
 
-    @if(session('success'))
-        <div style="background: #DCFCE7; color: #166534; padding: 14px; border-radius: 12px; margin-bottom: 20px;">
-            {{ session('success') }}
-        </div>
-    @endif
+        @if(session('success'))
+            <div class="alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
 
-    @if(session('error'))
-        <div style="background: #FEE2E2; color: #991B1B; padding: 14px; border-radius: 12px; margin-bottom: 20px;">
-            {{ session('error') }}
-        </div>
-    @endif
+        @if(session('error'))
+            <div class="alert-error">
+                {{ session('error') }}
+            </div>
+        @endif
 
     <div class="stats-grid">
         <div class="card">

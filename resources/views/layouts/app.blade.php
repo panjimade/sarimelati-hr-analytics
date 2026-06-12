@@ -575,6 +575,10 @@
 
             <div class="content">
                 {{ $slot }}
+
+                <div style="text-align: center; color: #9CA3AF; font-size: 12px; margin-top: 32px; padding: 18px;">
+                    © {{ date('Y') }} Sarimelati HR Analytics — HRIS & Predictive Analytics System
+                </div>
             </div>
         </main>
     </div>

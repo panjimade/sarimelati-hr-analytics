@@ -12,11 +12,11 @@
         </a>
     </div>
 
-    @if(session('success'))
-        <div style="background: #DCFCE7; color: #166534; padding: 14px; border-radius: 12px; margin-bottom: 20px;">
-            {{ session('success') }}
-        </div>
-    @endif
+        @if(session('success'))
+            <div class="alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
 
     <div class="table-card">
         <table>
@@ -53,14 +53,14 @@
                             @endif
                         </td>
                         <td>
-                            <a href="{{ route('performances.edit', $performance->id) }}" class="btn-red" style="padding: 7px 10px;">
-                                Edit
-                            </a>
+                            <a href="{{ route('attendances.edit', $attendance->id) }}" class="btn-secondary" style="padding: 7px 10px;">
+                                      Edit
+                             </a>
 
                             <form action="{{ route('performances.destroy', $performance->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Yakin ingin menghapus data KPI ini?')">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn-red" style="padding: 7px 10px; background:#991B1B;">
+                                <button type="submit" class="btn-danger" style="padding: 7px 10px;">
                                     Hapus
                                 </button>
                             </form>

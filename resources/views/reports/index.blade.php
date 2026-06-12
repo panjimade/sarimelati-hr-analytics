@@ -42,8 +42,7 @@
                 <button 
                     type="submit" 
                     formaction="{{ route('reports.export.excel') }}"
-                    class="btn-red"
-                    style="background: #166534;"
+                    class="btn-success"
                 >
                     Export Excel
                 </button>
