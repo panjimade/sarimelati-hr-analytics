@@ -19,20 +19,56 @@
         @endif
 
     <div class="table-card">
+        @php
+            $nextDirection = fn($column) => ($sort === $column && $direction === 'asc') ? 'desc' : 'asc';
+            $sortUrl = fn($column) => request()->fullUrlWithQuery([
+                'sort' => $column,
+                'direction' => $nextDirection($column)
+            ]);
+            $sortIcon = fn($column) => $sort === $column ? ($direction === 'asc' ? '↑' : '↓') : '↕';
+        @endphp
         <table>
-            <thead>
-                <tr>
-                    <th>Bulan</th>
-                    <th>Kode</th>
-                    <th>Nama Karyawan</th>
-                    <th>Disiplin</th>
-                    <th>Teamwork</th>
-                    <th>Kecepatan Kerja</th>
-                    <th>Total Score</th>
-                    <th>Kategori</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
+        <thead>
+            <tr>
+                <th>
+                    <a href="{{ $sortUrl('bulan') }}" class="sort-link">
+                        Bulan <span class="sort-arrow">{{ $sortIcon('bulan') }}</span>
+                    </a>
+                </th>
+                <th>
+                    <a href="{{ $sortUrl('kode') }}" class="sort-link">
+                        Kode <span class="sort-arrow">{{ $sortIcon('kode') }}</span>
+                    </a>
+                </th>
+                <th>
+                    <a href="{{ $sortUrl('nama') }}" class="sort-link">
+                        Nama Karyawan <span class="sort-arrow">{{ $sortIcon('nama') }}</span>
+                    </a>
+                </th>
+                <th>
+                    <a href="{{ $sortUrl('disiplin') }}" class="sort-link">
+                        Disiplin <span class="sort-arrow">{{ $sortIcon('disiplin') }}</span>
+                    </a>
+                </th>
+                <th>
+                    <a href="{{ $sortUrl('teamwork') }}" class="sort-link">
+                        Teamwork <span class="sort-arrow">{{ $sortIcon('teamwork') }}</span>
+                    </a>
+                </th>
+                <th>
+                    <a href="{{ $sortUrl('kecepatan_kerja') }}" class="sort-link">
+                        Kecepatan Kerja <span class="sort-arrow">{{ $sortIcon('kecepatan_kerja') }}</span>
+                    </a>
+                </th>
+                <th>
+                    <a href="{{ $sortUrl('total_score') }}" class="sort-link">
+                        Total Score <span class="sort-arrow">{{ $sortIcon('total_score') }}</span>
+                    </a>
+                </th>
+                <th>Kategori</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
             <tbody>
                 @forelse($performances as $performance)
                     <tr>
@@ -53,9 +89,9 @@
                             @endif
                         </td>
                         <td>
-                            <a href="{{ route('attendances.edit', $attendance->id) }}" class="btn-secondary" style="padding: 7px 10px;">
-                                      Edit
-                             </a>
+                            <a href="{{ route('performances.edit', $performance->id) }}" class="btn-secondary" style="padding: 7px 10px;">
+                                Edit
+                            </a>
 
                             <form action="{{ route('performances.destroy', $performance->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Yakin ingin menghapus data KPI ini?')">
                                 @csrf

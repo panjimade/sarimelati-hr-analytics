@@ -488,6 +488,24 @@
             width: 100% !important;
             height: 100% !important;
         }
+
+        .sort-link {
+            color: #374151;
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .sort-link:hover {
+            color: #C8102E;
+        }
+
+        .sort-arrow {
+            font-size: 12px;
+            color: #C8102E;
+        }
     </style>
 </head>
 <body>

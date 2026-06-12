@@ -19,12 +19,32 @@
     @endif
 
     <div class="table-card">
+        @php
+            $nextDirection = fn($column) => ($sort === $column && $direction === 'asc') ? 'desc' : 'asc';
+            $sortUrl = fn($column) => request()->fullUrlWithQuery([
+                'sort' => $column,
+                'direction' => $nextDirection($column)
+            ]);
+            $sortIcon = fn($column) => $sort === $column ? ($direction === 'asc' ? '↑' : '↓') : '↕';
+        @endphp
         <table>
             <thead>
                 <tr>
-                    <th>Tanggal</th>
-                    <th>Kode</th>
-                    <th>Nama Karyawan</th>
+                    <th>
+                        <a href="{{ $sortUrl('Tanggal') }}" class="sort-link">
+                            Tanggal <span class="sort-arrow">{{ $sortIcon('Tanggal') }}</span>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="{{ $sortUrl('Kode') }}" class="sort-link">
+                            Kode <span class="sort-arrow">{{ $sortIcon('Kode') }}</span>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="{{ $sortUrl('Nama Karyawan') }}" class="sort-link">
+                            Nama Karyawan <span class="sort-arrow">{{ $sortIcon('Nama Karyawan') }}</span>
+                        </a>
+                    </th>
                     <th>Status Hadir</th>
                     <th>Jam Masuk</th>
                     <th>Telat</th>
