@@ -51,22 +51,75 @@
 
     <div class="table-card">
         <div class="section-title">Hasil Prediksi Turnover</div>
+        @php
+            $nextDirection = fn($column) => ($sort === $column && $direction === 'asc') ? 'desc' : 'asc';
+
+            $sortUrl = fn($column) => request()->fullUrlWithQuery([
+                'sort' => $column,
+                'direction' => $nextDirection($column),
+                'page' => 1
+            ]);
+
+            $sortIcon = fn($column) => $sort === $column ? ($direction === 'asc' ? '↑' : '↓') : '↕';
+        @endphp
 
         <table>
             <thead>
                 <tr>
-                    <th>Tanggal</th>
-                    <th>Kode</th>
-                    <th>Nama Karyawan</th>
-                    <th>Jabatan</th>
-                    <th>Rata-rata KPI</th>
-                    <th>Tidak Hadir</th>
-                    <th>Total Telat</th>
-                    <th>Skor Risiko</th>
+                    <th>
+                        <a href="{{ $sortUrl('tanggal') }}" class="sort-link">
+                            Tanggal Prediksi <span class="sort-arrow">{{ $sortIcon('tanggal') }}</span>
+                        </a>
+                    </th>
+
+                    <th>
+                        <a href="{{ $sortUrl('kode') }}" class="sort-link">
+                            Kode <span class="sort-arrow">{{ $sortIcon('kode') }}</span>
+                        </a>
+                    </th>
+
+                    <th>
+                        <a href="{{ $sortUrl('nama') }}" class="sort-link">
+                            Nama Karyawan <span class="sort-arrow">{{ $sortIcon('nama') }}</span>
+                        </a>
+                    </th>
+
+                    <th>
+                        <a href="{{ $sortUrl('jabatan') }}" class="sort-link">
+                            Jabatan <span class="sort-arrow">{{ $sortIcon('jabatan') }}</span>
+                        </a>
+                    </th>
+
+                    <th>
+                        <a href="{{ $sortUrl('rata_rata_kpi') }}" class="sort-link">
+                            Rata-rata KPI <span class="sort-arrow">{{ $sortIcon('rata_rata_kpi') }}</span>
+                        </a>
+                    </th>
+
+                    <th>
+                        <a href="{{ $sortUrl('jumlah_tidak_hadir') }}" class="sort-link">
+                            Tidak Hadir <span class="sort-arrow">{{ $sortIcon('jumlah_tidak_hadir') }}</span>
+                        </a>
+                    </th>
+
+                    <th>
+                        <a href="{{ $sortUrl('total_telat') }}" class="sort-link">
+                            Total Telat <span class="sort-arrow">{{ $sortIcon('total_telat') }}</span>
+                        </a>
+                    </th>
+
+                    <th>
+                        <a href="{{ $sortUrl('skor_prediksi') }}" class="sort-link">
+                            Skor Risiko <span class="sort-arrow">{{ $sortIcon('skor_prediksi') }}</span>
+                        </a>
+                    </th>
+
                     <th>Kategori</th>
+
                     <th>Hasil</th>
                 </tr>
             </thead>
+
             <tbody>
                 @forelse($predictions as $prediction)
                     <tr>

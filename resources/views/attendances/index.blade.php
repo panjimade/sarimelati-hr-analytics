@@ -23,31 +23,41 @@
             $nextDirection = fn($column) => ($sort === $column && $direction === 'asc') ? 'desc' : 'asc';
             $sortUrl = fn($column) => request()->fullUrlWithQuery([
                 'sort' => $column,
-                'direction' => $nextDirection($column)
+                'direction' => $nextDirection($column),
+                'page' => 1
             ]);
             $sortIcon = fn($column) => $sort === $column ? ($direction === 'asc' ? '↑' : '↓') : '↕';
         @endphp
+
         <table>
             <thead>
                 <tr>
                     <th>
-                        <a href="{{ $sortUrl('Tanggal') }}" class="sort-link">
-                            Tanggal <span class="sort-arrow">{{ $sortIcon('Tanggal') }}</span>
+                        <a href="{{ $sortUrl('tanggal') }}" class="sort-link">
+                            Tanggal <span class="sort-arrow">{{ $sortIcon('tanggal') }}</span>
                         </a>
                     </th>
                     <th>
-                        <a href="{{ $sortUrl('Kode') }}" class="sort-link">
-                            Kode <span class="sort-arrow">{{ $sortIcon('Kode') }}</span>
+                        <a href="{{ $sortUrl('kode') }}" class="sort-link">
+                            Kode <span class="sort-arrow">{{ $sortIcon('kode') }}</span>
                         </a>
                     </th>
                     <th>
-                        <a href="{{ $sortUrl('Nama Karyawan') }}" class="sort-link">
-                            Nama Karyawan <span class="sort-arrow">{{ $sortIcon('Nama Karyawan') }}</span>
+                        <a href="{{ $sortUrl('nama') }}" class="sort-link">
+                            Nama Karyawan <span class="sort-arrow">{{ $sortIcon('nama') }}</span>
                         </a>
                     </th>
-                    <th>Status Hadir</th>
+                    <th>
+                        <a href="{{ $sortUrl('hadir') }}" class="sort-link">
+                            Status Hadir <span class="sort-arrow">{{ $sortIcon('hadir') }}</span>
+                        </a>
+                    </th>
                     <th>Jam Masuk</th>
-                    <th>Telat</th>
+                    <th>
+                        <a href="{{ $sortUrl('telat_menit') }}" class="sort-link">
+                            Telat <span class="sort-arrow">{{ $sortIcon('telat_menit') }}</span>
+                        </a>
+                    </th>
                     <th>Aksi</th>
                 </tr>
             </thead>
