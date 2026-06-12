@@ -1,18 +1,44 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Http\Request;
 
 use App\Models\Employee;
 
 class EmployeeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $employees = Employee::with(['division', 'position'])
-            ->orderBy('employee_code')
-            ->paginate(10);
+        $allowedSorts = [
+            'kode' => 'employees.employee_code',
+            'nama' => 'employees.nama',
+            'divisi' => 'divisions.nama_divisi',
+            'jabatan' => 'positions.nama_jabatan',
+            'shift' => 'employees.shift',
+            'tanggal_masuk' => 'employees.tanggal_masuk',
+            'status' => 'employees.status',
+        ];
 
-        return view('employees.index', compact('employees'));
+        $sort = $request->get('sort', 'kode');
+        $direction = $request->get('direction', 'asc');
+
+        if (!array_key_exists($sort, $allowedSorts)) {
+            $sort = 'kode';
+        }
+
+        if (!in_array($direction, ['asc', 'desc'])) {
+            $direction = 'asc';
+        }
+
+        $employees = Employee::with(['division', 'position'])
+            ->join('divisions', 'employees.division_id', '=', 'divisions.id')
+            ->join('positions', 'employees.position_id', '=', 'positions.id')
+            ->select('employees.*')
+            ->orderBy($allowedSorts[$sort], $direction)
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('employees.index', compact('employees', 'sort', 'direction'));
     }
 
     public function show(Employee $employee)

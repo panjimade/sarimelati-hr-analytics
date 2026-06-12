@@ -8,15 +8,39 @@ use Illuminate\Http\Request;
 
 class PerformanceController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $allowedSorts = [
+            'bulan' => 'performances.bulan',
+            'kode' => 'employees.employee_code',
+            'nama' => 'employees.nama',
+            'disiplin' => 'performances.disiplin',
+            'teamwork' => 'performances.teamwork',
+            'kecepatan_kerja' => 'performances.kecepatan_kerja',
+            'total_score' => 'performances.total_score',
+        ];
+
+        $sort = $request->get('sort', 'bulan');
+        $direction = $request->get('direction', 'desc');
+
+        if (!array_key_exists($sort, $allowedSorts)) {
+            $sort = 'bulan';
+        }
+
+        if (!in_array($direction, ['asc', 'desc'])) {
+            $direction = 'desc';
+        }
+
         $performances = Performance::with('employee')
-            ->orderByDesc('bulan')
-            ->paginate(10);
+            ->join('employees', 'performances.employee_id', '=', 'employees.id')
+            ->select('performances.*')
+            ->orderBy($allowedSorts[$sort], $direction)
+            ->paginate(10)
+            ->withQueryString();
 
-        return view('performances.index', compact('performances'));
+        return view('performances.index', compact('performances', 'sort', 'direction'));
     }
-
+    
     public function create()
     {
         $employees = Employee::orderBy('employee_code')->get();

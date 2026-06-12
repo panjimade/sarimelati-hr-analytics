@@ -13,18 +13,38 @@
     </div>
 
     @if(session('success'))
-        <div style="background: #DCFCE7; color: #166534; padding: 14px; border-radius: 12px; margin-bottom: 20px;">
+        <div class="alert-success">
             {{ session('success') }}
         </div>
     @endif
 
     <div class="table-card">
+        @php
+            $nextDirection = fn($column) => ($sort === $column && $direction === 'asc') ? 'desc' : 'asc';
+            $sortUrl = fn($column) => request()->fullUrlWithQuery([
+                'sort' => $column,
+                'direction' => $nextDirection($column)
+            ]);
+            $sortIcon = fn($column) => $sort === $column ? ($direction === 'asc' ? '↑' : '↓') : '↕';
+        @endphp
         <table>
             <thead>
                 <tr>
-                    <th>Tanggal</th>
-                    <th>Kode</th>
-                    <th>Nama Karyawan</th>
+                    <th>
+                        <a href="{{ $sortUrl('Tanggal') }}" class="sort-link">
+                            Tanggal <span class="sort-arrow">{{ $sortIcon('Tanggal') }}</span>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="{{ $sortUrl('Kode') }}" class="sort-link">
+                            Kode <span class="sort-arrow">{{ $sortIcon('Kode') }}</span>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="{{ $sortUrl('Nama Karyawan') }}" class="sort-link">
+                            Nama Karyawan <span class="sort-arrow">{{ $sortIcon('Nama Karyawan') }}</span>
+                        </a>
+                    </th>
                     <th>Status Hadir</th>
                     <th>Jam Masuk</th>
                     <th>Telat</th>
@@ -47,14 +67,14 @@
                         <td>{{ $attendance->jam_masuk ?? '-' }}</td>
                         <td>{{ $attendance->telat_menit }} menit</td>
                         <td>
-                            <a href="{{ route('attendances.edit', $attendance->id) }}" class="btn-red" style="padding: 7px 10px;">
+                            <a href="{{ route('attendances.edit', $attendance->id) }}" class="btn-secondary" style="padding: 7px 10px;">
                                 Edit
                             </a>
 
                             <form action="{{ route('attendances.destroy', $attendance->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Yakin ingin menghapus data absensi ini?')">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn-red" style="padding: 7px 10px; background:#991B1B;">
+                                <button type="submit" class="btn-danger" style="padding: 7px 10px;">
                                     Hapus
                                 </button>
                             </form>

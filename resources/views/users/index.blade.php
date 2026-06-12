@@ -12,17 +12,17 @@
         </a>
     </div>
 
-    @if(session('success'))
-        <div style="background: #DCFCE7; color: #166534; padding: 14px; border-radius: 12px; margin-bottom: 20px;">
-            {{ session('success') }}
-        </div>
-    @endif
+        @if(session('success'))
+            <div class="alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
 
-    @if(session('error'))
-        <div style="background: #FEE2E2; color: #991B1B; padding: 14px; border-radius: 12px; margin-bottom: 20px;">
-            {{ session('error') }}
-        </div>
-    @endif
+        @if(session('error'))
+            <div class="alert-error">
+                {{ session('error') }}
+            </div>
+        @endif
 
     <div class="table-card">
         <table>
@@ -51,16 +51,16 @@
                         </td>
                         <td>{{ $user->created_at ? $user->created_at->format('d M Y') : '-' }}</td>
                         <td>
-                            <a href="{{ route('users.edit', $user->id) }}" class="btn-red" style="padding: 7px 10px;">
+                            <a href="{{ route('users.edit', $user->id) }}" class="btn-secondary" style="padding: 7px 10px;">
                                 Edit
                             </a>
 
                             <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Yakin ingin menghapus user ini?')">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn-red" style="padding: 7px 10px; background:#991B1B;">
-                                    Hapus
-                                </button>
+                            <button type="submit" class="btn-danger" style="padding: 7px 10px;">
+                                Hapus
+                            </button>
                             </form>
                         </td>
                     </tr>

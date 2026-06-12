@@ -12,13 +12,13 @@
         </a>
     </div>
 
-    @if($errors->any())
-        <div style="background: #FEE2E2; color: #991B1B; padding: 14px; border-radius: 12px; margin-bottom: 20px;">
-            @foreach($errors->all() as $error)
-                <div>{{ $error }}</div>
-            @endforeach
-        </div>
-    @endif
+        @if($errors->any())
+            <div class="alert-error">
+                @foreach($errors->all() as $error)
+                    <div>{{ $error }}</div>
+                @endforeach
+            </div>
+        @endif
 
     <div class="card" style="max-width: 720px;">
         <form action="{{ route('users.update', $user->id) }}" method="POST">

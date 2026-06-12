@@ -8,13 +8,36 @@ use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $attendances = Attendance::with('employee')
-            ->orderByDesc('tanggal')
-            ->paginate(10);
+        $allowedSorts = [
+            'tanggal' => 'attendances.tanggal',
+            'kode' => 'employees.employee_code',
+            'nama' => 'employees.nama',
+            'hadir' => 'attendances.hadir',
+            'jam_masuk' => 'attendances.jam_masuk',
+            'telat_menit' => 'attendances.telat_menit',
+        ];
 
-        return view('attendances.index', compact('attendances'));
+        $sort = $request->get('sort', 'tanggal');
+        $direction = $request->get('direction', 'desc');
+
+        if (!array_key_exists($sort, $allowedSorts)) {
+            $sort = 'tanggal';
+        }
+
+        if (!in_array($direction, ['asc', 'desc'])) {
+            $direction = 'desc';
+        }
+
+        $attendances = Attendance::with('employee')
+            ->join('employees', 'attendances.employee_id', '=', 'employees.id')
+            ->select('attendances.*')
+            ->orderBy($allowedSorts[$sort], $direction)
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('attendances.index', compact('attendances', 'sort', 'direction'));
     }
 
     public function create()

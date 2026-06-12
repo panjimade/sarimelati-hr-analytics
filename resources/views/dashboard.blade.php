@@ -84,11 +84,14 @@
                         </td>
                     </tr>
                 @empty
-                    <tr>
-                        <td colspan="5">
-                            Data performa belum tersedia. Silakan import Excel terlebih dahulu.
-                        </td>
-                    </tr>
+                <tr>
+                    <td colspan="5">
+                        <div class="empty-state">
+                            <div class="empty-state-title">Data belum tersedia</div>
+                            <div>Silakan import Excel atau tambahkan data terlebih dahulu.</div>
+                        </div>
+                    </td>
+                </tr>
                 @endforelse
             </tbody>
         </table>

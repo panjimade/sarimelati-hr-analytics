@@ -9,13 +9,13 @@
     </div>
 
     @if(session('success'))
-        <div style="background: #DCFCE7; color: #166534; padding: 14px; border-radius: 12px; margin-bottom: 20px;">
+        <div class="alert-success">
             {{ session('success') }}
         </div>
     @endif
 
     @if($errors->any())
-        <div style="background: #FEE2E2; color: #991B1B; padding: 14px; border-radius: 12px; margin-bottom: 20px;">
+        <div class="alert-error">
             @foreach($errors->all() as $error)
                 <div>{{ $error }}</div>
             @endforeach

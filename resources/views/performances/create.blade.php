@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout>>
     <div class="page-header">
         <div>
             <div class="page-title">Tambah Data KPI</div>
@@ -13,7 +13,7 @@
     </div>
 
     @if($errors->any())
-        <div style="background: #FEE2E2; color: #991B1B; padding: 14px; border-radius: 12px; margin-bottom: 20px;">
+        <div class="alert-error">
             @foreach($errors->all() as $error)
                 <div>{{ $error }}</div>
             @endforeach
